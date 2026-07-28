@@ -1,6 +1,6 @@
 ---
 title: CCR-023 — Add the Jagwar Architecture Change Protocol
-status: pending-andrew-confirmation
+status: approved
 path: AGENTS.md
 pinnedBaseline: 423e2e924366419e418ee049093872d535eea41a
 ---
@@ -52,4 +52,4 @@ The governance document and checker can be added independently, but agents autom
 
 ## Decision
 
-Pending Andrew's explicit per-file confirmation. Approval must be limited to the exact section above.
+Andrew explicitly approved CCR-023 on 2026-07-28. Approval is limited to the exact section above and is bound to the resulting `AGENTS.md` content hash in the machine-readable registry.

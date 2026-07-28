@@ -37,14 +37,16 @@
     {
       "requestId": "CCR-023",
       "path": "AGENTS.md",
-      "status": "pending",
+      "status": "approved",
+      "approvedContentSha256": "33ef5c173f5ba3004c7a5c793df831d4f94020588538d128128a60bf6d73ac88",
       "scope": "Add the Jagwar architecture change protocol for coding agents.",
       "record": "architecture/core-change-requests/CCR-023-AGENTS.md"
     },
     {
       "requestId": "CCR-024",
       "path": "package.json",
-      "status": "pending",
+      "status": "approved",
+      "approvedContentSha256": "9dbdfec34cda3ab4da571d3ba312bcc169f5cca00ef612c5df544a36445ae4da",
       "scope": "Add architecture:check and architecture:report convenience scripts without dependencies.",
       "record": "architecture/core-change-requests/CCR-024-package-json.md"
     }
