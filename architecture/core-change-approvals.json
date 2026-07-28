@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "baselineCommit": "423e2e924366419e418ee049093872d535eea41a",
+  "approvals": [
+    {
+      "requestId": "CCR-019",
+      "path": ".gitmodules",
+      "status": "approved",
+      "approvedContentSha256": "deleted",
+      "scope": "Remove the inaccessible private apps/admin submodule declaration.",
+      "record": "architecture/core-change-requests/CCR-019-022-OD15-approved.md"
+    },
+    {
+      "requestId": "CCR-020",
+      "path": "apps/admin",
+      "status": "approved",
+      "approvedContentSha256": "deleted",
+      "scope": "Remove the inaccessible private apps/admin gitlink without replacement.",
+      "record": "architecture/core-change-requests/CCR-019-022-OD15-approved.md"
+    },
+    {
+      "requestId": "CCR-021",
+      "path": "package.json",
+      "status": "approved",
+      "approvedContentSha256": "e3276f3f24e5427790c71fdbabc82d64164bce080206ede43cfbfcb9a69b82ae",
+      "scope": "Remove only the unusable dev:admin root script.",
+      "record": "architecture/core-change-requests/CCR-019-022-OD15-approved.md"
+    },
+    {
+      "requestId": "CCR-022",
+      "path": "bun.lock",
+      "status": "approved",
+      "approvedContentSha256": "3eb968f875ad965240e3c2f0b89b350834e0feedf869d050b70775c0fa16d02c",
+      "scope": "Pinned-Bun lock result for removal of the inaccessible apps/admin workspace.",
+      "record": "architecture/core-change-requests/CCR-019-022-OD15-approved.md"
+    },
+    {
+      "requestId": "CCR-023",
+      "path": "AGENTS.md",
+      "status": "pending",
+      "scope": "Add the Jagwar architecture change protocol for coding agents.",
+      "record": "architecture/core-change-requests/CCR-023-AGENTS.md"
+    },
+    {
+      "requestId": "CCR-024",
+      "path": "package.json",
+      "status": "pending",
+      "scope": "Add architecture:check and architecture:report convenience scripts without dependencies.",
+      "record": "architecture/core-change-requests/CCR-024-package-json.md"
+    }
+  ]
+}
