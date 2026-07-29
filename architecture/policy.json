@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "baselineCommit": "423e2e924366419e418ee049093872d535eea41a",
+  "approvalsFile": "architecture/core-change-approvals.json",
+  "sourceRoots": [
+    "apps",
+    "packages",
+    "docs/src",
+    "tooling",
+    "scripts"
+  ],
+  "sourceExtensions": [
+    ".c",
+    ".cc",
+    ".cpp",
+    ".cs",
+    ".go",
+    ".java",
+    ".js",
+    ".jsx",
+    ".kt",
+    ".mjs",
+    ".php",
+    ".py",
+    ".rb",
+    ".rs",
+    ".svelte",
+    ".swift",
+    ".ts",
+    ".tsx",
+    ".vue"
+  ],
+  "ignoredDirectories": [
+    ".git",
+    ".next",
+    ".turbo",
+    "build",
+    "coverage",
+    "dist",
+    "node_modules",
+    "out",
+    "target",
+    "vendor"
+  ],
+  "warningThresholds": {
+    "authoredFileLines": 400,
+    "pathDepth": 12
+  },
+  "importRules": [
+    {
+      "id": "no-private-workspace-source-imports",
+      "sourcePrefixes": [
+        "apps/",
+        "packages/",
+        "docs/src/",
+        "tooling/",
+        "scripts/"
+      ],
+      "importPatterns": [
+        "^@onlook/[^/]+/src(?:/|$)"
+      ],
+      "message": "Import another workspace through its public entry point, not its private src tree."
+    },
+    {
+      "id": "packages-must-not-import-applications",
+      "sourcePrefixes": [
+        "packages/"
+      ],
+      "importPatterns": [
+        "^@onlook/(?:web-client|web-server|web-preload)(?:/|$)",
+        "^@/",
+        "^~/"
+      ],
+      "message": "A reusable package must not depend on application-private code."
+    },
+    {
+      "id": "editor-state-must-not-import-route-ui",
+      "sourcePrefixes": [
+        "apps/web/client/src/components/store/"
+      ],
+      "importPatterns": [
+        "^(?:@|~)/app/"
+      ],
+      "message": "Editor state must own or consume stable contracts instead of route-local UI types."
+    },
+    {
+      "id": "pure-capability-packages-stay-runtime-neutral",
+      "sourcePrefixes": [
+        "packages/leads/",
+        "packages/business-policy/",
+        "packages/durable-operation/",
+        "packages/outreach/",
+        "packages/activation/",
+        "packages/business-migration/"
+      ],
+      "importPatterns": [
+        "^(?:react|react-dom|next)(?:/|$)",
+        "^@trpc/",
+        "^@supabase/",
+        "^drizzle-orm(?:/|$)",
+        "^stripe(?:/|$)",
+        "^@onlook/(?:db|stripe|ui|web-client|web-server|web-preload)(?:/|$)"
+      ],
+      "message": "Pure capability packages may contain contracts and rules, not UI, transport, persistence, provider, or application dependencies."
+    }
+  ],
+  "clientForbiddenImportPatterns": [
+    "^server-only$",
+    "^node:",
+    "^@/server(?:/|$)",
+    "^@/utils/supabase/(?:admin|server)(?:/|$)",
+    "^@onlook/(?:db|image-server)(?:/|$)"
+  ],
+  "placement": {
+    "baselineCommit": "423e2e924366419e418ee049093872d535eea41a",
+    "manifestsDirectory": "architecture/slices",
+    "governedPrefixes": [
+      ".github/workflows/",
+      ".githooks/",
+      "apps/",
+      "docs/src/",
+      "packages/",
+      "scripts/",
+      "tooling/"
+    ],
+    "forbiddenPathPatterns": [
+      {
+        "id": "no-generic-dumping-directories",
+        "pattern": "(^|/)(?:dump|junk|misc|stuff)(?:/|$)",
+        "message": "Use the owning runtime and product capability instead of a generic dumping directory."
+      },
+      {
+        "id": "no-generic-jagwar-package",
+        "pattern": "^packages/(?:common|jagwar|shared)(?:/|$)",
+        "message": "Create a focused capability package, not a generic cross-product package."
+      },
+      {
+        "id": "no-story-number-runtime-folders",
+        "pattern": "(^|/)(?:epic|story)[-_]?[0-9]+[a-z]?(?:/|$)",
+        "message": "Runtime code is organized by capability, not BMAD epic or story number."
+      }
+    ],
+    "allowedNewWorkspacePackageDirectories": [
+      "packages/activation",
+      "packages/business-migration",
+      "packages/business-policy",
+      "packages/durable-operation",
+      "packages/leads",
+      "packages/outreach"
+    ]
+  }
+}

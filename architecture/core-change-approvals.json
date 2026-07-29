@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "baselineCommit": "423e2e924366419e418ee049093872d535eea41a",
+  "approvals": [
+    {
+      "requestId": "CCR-019",
+      "path": ".gitmodules",
+      "status": "approved",
+      "approvedContentSha256": "deleted",
+      "scope": "Remove the inaccessible private apps/admin submodule declaration.",
+      "record": "architecture/core-change-requests/CCR-019-022-OD15-approved.md"
+    },
+    {
+      "requestId": "CCR-020",
+      "path": "apps/admin",
+      "status": "approved",
+      "approvedContentSha256": "deleted",
+      "scope": "Remove the inaccessible private apps/admin gitlink without replacement.",
+      "record": "architecture/core-change-requests/CCR-019-022-OD15-approved.md"
+    },
+    {
+      "requestId": "CCR-021",
+      "path": "package.json",
+      "status": "approved",
+      "approvedContentSha256": "e3276f3f24e5427790c71fdbabc82d64164bce080206ede43cfbfcb9a69b82ae",
+      "scope": "Remove only the unusable dev:admin root script.",
+      "record": "architecture/core-change-requests/CCR-019-022-OD15-approved.md"
+    },
+    {
+      "requestId": "CCR-022",
+      "path": "bun.lock",
+      "status": "approved",
+      "approvedContentSha256": "3eb968f875ad965240e3c2f0b89b350834e0feedf869d050b70775c0fa16d02c",
+      "scope": "Pinned-Bun lock result for removal of the inaccessible apps/admin workspace.",
+      "record": "architecture/core-change-requests/CCR-019-022-OD15-approved.md"
+    },
+    {
+      "requestId": "CCR-023",
+      "path": "AGENTS.md",
+      "status": "approved",
+      "approvedContentSha256": "33ef5c173f5ba3004c7a5c793df831d4f94020588538d128128a60bf6d73ac88",
+      "scope": "Add the Jagwar architecture change protocol for coding agents.",
+      "record": "architecture/core-change-requests/CCR-023-AGENTS.md"
+    },
+    {
+      "requestId": "CCR-024",
+      "path": "package.json",
+      "status": "approved",
+      "approvedContentSha256": "9dbdfec34cda3ab4da571d3ba312bcc169f5cca00ef612c5df544a36445ae4da",
+      "scope": "Add architecture:check and architecture:report convenience scripts without dependencies.",
+      "record": "architecture/core-change-requests/CCR-024-package-json.md"
+    },
+    {
+      "requestId": "CCR-025",
+      "path": ".github/workflows/chromatic.yml",
+      "status": "approved",
+      "approvedContentSha256": "48bebccce78cc01221d71d9f1b0ab6d20483370473840c3045e441e9ef97a59c",
+      "scope": "Map the two browser-safe Supabase repository variables into inherited Chromatic CI.",
+      "record": "architecture/core-change-requests/CCR-025-chromatic-supabase-env.md"
+    }
+  ]
+}

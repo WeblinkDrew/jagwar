@@ -33,6 +33,21 @@ Actionable rules for repo agents—keep diffs minimal, safe, token‑efficient.
 - Avoid running the local dev server in automation contexts.
 - Respect type safety and
 
+### Architecture Change Protocol
+
+- For new features, packages, runtimes, or substantial refactors, use the
+  `structure-modular-codebase` workflow when available and read
+  `docs/architecture-governance.md`.
+- Name the owning runtime and product/domain capability before creating files.
+- Prefer capability-local or route-local modules; do not create generic dumping
+  packages or add private `@onlook/*/src/*` imports.
+- Treat the pinned Onlook baseline as inherited and grandfathered. Do not
+  refactor it merely to satisfy new Jagwar conventions.
+- Before editing any protected baseline file, stop for its exact approved Core
+  Change Request.
+- Run `bun scripts/architecture/check.ts --changed` before handoff and report
+  architectural warnings or intentional exceptions.
+
 ### Next.js App Router
 
 - Default to Server Components. Add `use client` when using events,
