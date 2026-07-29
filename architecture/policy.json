@@ -110,5 +110,43 @@
     "^@/server(?:/|$)",
     "^@/utils/supabase/(?:admin|server)(?:/|$)",
     "^@onlook/(?:db|image-server)(?:/|$)"
-  ]
+  ],
+  "placement": {
+    "baselineCommit": "423e2e924366419e418ee049093872d535eea41a",
+    "manifestsDirectory": "architecture/slices",
+    "governedPrefixes": [
+      ".github/workflows/",
+      ".githooks/",
+      "apps/",
+      "docs/src/",
+      "packages/",
+      "scripts/",
+      "tooling/"
+    ],
+    "forbiddenPathPatterns": [
+      {
+        "id": "no-generic-dumping-directories",
+        "pattern": "(^|/)(?:dump|junk|misc|stuff)(?:/|$)",
+        "message": "Use the owning runtime and product capability instead of a generic dumping directory."
+      },
+      {
+        "id": "no-generic-jagwar-package",
+        "pattern": "^packages/(?:common|jagwar|shared)(?:/|$)",
+        "message": "Create a focused capability package, not a generic cross-product package."
+      },
+      {
+        "id": "no-story-number-runtime-folders",
+        "pattern": "(^|/)(?:epic|story)[-_]?[0-9]+[a-z]?(?:/|$)",
+        "message": "Runtime code is organized by capability, not BMAD epic or story number."
+      }
+    ],
+    "allowedNewWorkspacePackageDirectories": [
+      "packages/activation",
+      "packages/business-migration",
+      "packages/business-policy",
+      "packages/durable-operation",
+      "packages/leads",
+      "packages/outreach"
+    ]
+  }
 }

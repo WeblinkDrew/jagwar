@@ -3,11 +3,13 @@ import path from 'node:path';
 import type { ArchitecturePolicy, Finding, WorkspacePackage } from './types';
 import { addedText, assertCommit, baselineFiles, currentFiles, diffEntries } from './git';
 import { extractImports, newCycleEdges, ownerPackage, workspaceImportName } from './imports';
+import { placementFindings } from './placement';
 import {
     baselinePackages,
     currentPackages,
     loadApprovals,
     loadPolicy,
+    loadSliceManifests,
     packageGraph,
 } from './policy';
 
@@ -74,13 +76,30 @@ export async function runArchitectureCheck(root: string): Promise<Finding[]> {
     const policy = await loadPolicy(root);
     const approvals = await loadApprovals(root, policy);
     await assertCommit(root, policy.baselineCommit);
+    await assertCommit(root, policy.placement.baselineCommit);
 
-    const [baseline, current, changes] = await Promise.all([
-        baselineFiles(root, policy.baselineCommit),
-        currentFiles(root),
-        diffEntries(root, policy.baselineCommit),
-    ]);
+    const [baseline, placementBaseline, current, changes, placementChanges, sliceManifests] =
+        await Promise.all([
+            baselineFiles(root, policy.baselineCommit),
+            baselineFiles(root, policy.placement.baselineCommit),
+            currentFiles(root),
+            diffEntries(root, policy.baselineCommit),
+            diffEntries(root, policy.placement.baselineCommit),
+            loadSliceManifests(root, policy),
+        ]);
     const findings: Finding[] = [];
+
+    findings.push(
+        ...placementFindings({
+            policy: policy.placement,
+            manifests: sliceManifests,
+            changedPaths: [
+                ...placementChanges.flatMap((entry) => entry.paths),
+                ...current.filter((file) => !placementBaseline.has(file)),
+            ],
+            pinnedBaselineFiles: baseline,
+        }),
+    );
 
     const protectedChanges = new Set(
         changes.flatMap((entry) => entry.paths).filter((file) => baseline.has(file)),

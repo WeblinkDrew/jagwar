@@ -1,6 +1,11 @@
 import path from 'node:path';
 
-import type { ArchitecturePolicy, CoreChangeApprovalFile, WorkspacePackage } from './types';
+import type {
+    ArchitecturePolicy,
+    ArchitectureSliceManifest,
+    CoreChangeApprovalFile,
+    WorkspacePackage,
+} from './types';
 import { baselineText } from './git';
 
 function dependencyNames(manifest: Record<string, unknown>): Set<string> {
@@ -22,10 +27,34 @@ export async function loadPolicy(root: string): Promise<ArchitecturePolicy> {
     const policy = (await Bun.file(
         path.join(root, 'architecture/policy.json'),
     ).json()) as ArchitecturePolicy;
-    if (policy.version !== 1 || !policy.baselineCommit || !policy.approvalsFile) {
+    if (
+        policy.version !== 1 ||
+        !policy.baselineCommit ||
+        !policy.approvalsFile ||
+        !policy.placement?.baselineCommit ||
+        !policy.placement.manifestsDirectory
+    ) {
         throw new Error('Unsupported or incomplete architecture policy.');
     }
     return policy;
+}
+
+export async function loadSliceManifests(
+    root: string,
+    policy: ArchitecturePolicy,
+): Promise<ArchitectureSliceManifest[]> {
+    const directory = path.join(root, policy.placement.manifestsDirectory);
+    const glob = new Bun.Glob('*.json');
+    const manifests: ArchitectureSliceManifest[] = [];
+
+    for await (const file of glob.scan({ cwd: directory, onlyFiles: true })) {
+        const manifest = (await Bun.file(
+            path.join(directory, file),
+        ).json()) as ArchitectureSliceManifest;
+        manifests.push(manifest);
+    }
+
+    return manifests.sort((a, b) => a.slice.localeCompare(b.slice));
 }
 
 export async function loadApprovals(

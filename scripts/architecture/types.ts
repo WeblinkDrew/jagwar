@@ -18,6 +18,36 @@ export interface ArchitecturePolicy {
     };
     importRules: ImportRule[];
     clientForbiddenImportPatterns: string[];
+    placement: PlacementPolicy;
+}
+
+export interface PlacementPolicy {
+    baselineCommit: string;
+    manifestsDirectory: string;
+    governedPrefixes: string[];
+    forbiddenPathPatterns: Array<{
+        id: string;
+        pattern: string;
+        message: string;
+    }>;
+    allowedNewWorkspacePackageDirectories: string[];
+}
+
+export type SlicePathClassification = 'new' | 'protected-original';
+
+export interface SlicePathDeclaration {
+    path: string;
+    classification: SlicePathClassification;
+    role: string;
+    coreChangeRequest?: string;
+}
+
+export interface ArchitectureSliceManifest {
+    version: 1;
+    slice: string;
+    capability: string;
+    owningRuntime: string;
+    paths: SlicePathDeclaration[];
 }
 
 export interface CoreChangeApproval {

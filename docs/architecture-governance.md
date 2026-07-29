@@ -10,6 +10,7 @@ The checker evaluates:
 - import text added to a protected baseline file under an approved Core Change Request;
 - new workspace dependency edges;
 - every protected baseline path whose content differs from the pinned commit.
+- every governed path changed from the pinned Onlook baseline, which must be declared by an exact slice manifest.
 
 Existing Onlook imports, package cycles, file sizes, and directory depth remain informational unless Jagwar expands them.
 
@@ -23,6 +24,9 @@ Existing Onlook imports, package cycles, file sizes, and directory depth remain 
 - New editor state must not depend on route-local UI contracts.
 - New client modules must not import known server-only modules.
 - Jagwar pure capability packages remain free of UI, transport, persistence, provider, and application dependencies.
+- Every governed changed path is declared in `architecture/slices/*.json` with its capability, owning runtime, role, and correct new/Jagwar-owned/protected classification.
+- Runtime code does not use generic dumping directories, generic Jagwar packages, or BMAD story-number folders.
+- New workspace packages are limited to focused capability packages already allocated by the approved architecture plan.
 
 ## Advisory signals
 
@@ -30,15 +34,49 @@ Authored files over 400 lines and source paths deeper than 12 segments receive w
 
 ## Local commands
 
-Until the pending root-manifest Core Change Request is approved, run:
+For the fastest edit/commit loop, run:
+
+```bash
+bun scripts/ci/local.ts --mode structure
+```
+
+Before pushing a story branch, run:
+
+```bash
+bun scripts/ci/local.ts --mode pre-push
+```
+
+To reproduce the slower complete local test gate, run:
+
+```bash
+bun scripts/ci/local.ts --mode full
+```
+
+The underlying focused commands remain available:
 
 ```bash
 bun scripts/architecture/check.ts --changed
 bun scripts/architecture/check.ts --report
-bun test scripts/architecture/check.test.ts
+bun test scripts/architecture/check.test.ts scripts/architecture/placement.test.ts
 ```
 
 `--changed` and `--all` enforce the same pinned-baseline ratchet. `--report` prints findings without failing on architectural errors.
+
+## File placement and slice manifests
+
+Use `docs/file-placement.md` before creating a new runtime path. Each implementation slice adds one JSON manifest under `architecture/slices/`. The manifest is the reviewed path plan; CI compares the real Git diff with the accumulated declarations and rejects undeclared or misclassified governed paths.
+
+The manifest does not authorize a protected-file edit. A protected declaration must identify its exact Core Change Request, and the resulting content must still match the approved hash registry.
+
+## Repository-owned Git hooks
+
+Enable the versioned hooks once per clone:
+
+```bash
+bun scripts/ci/install-hooks.ts
+```
+
+The pre-commit hook runs the sub-second structure gate. The pre-push hook runs architecture tests, web-client type checking, and Git diff validation. Hooks provide fast feedback but are not a security boundary; required GitHub checks remain the authoritative merge gate.
 
 ## Adding an exception
 

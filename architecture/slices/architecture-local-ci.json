@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "slice": "architecture-local-ci",
+  "capability": "architecture-governance",
+  "owningRuntime": "repository-tooling",
+  "paths": [
+    {
+      "path": ".github/workflows/architecture.yml",
+      "classification": "new",
+      "role": "remote architecture verification"
+    },
+    {
+      "path": ".githooks/pre-commit",
+      "classification": "new",
+      "role": "fast local structure gate"
+    },
+    {
+      "path": ".githooks/pre-push",
+      "classification": "new",
+      "role": "local pre-push verification gate"
+    },
+    {
+      "path": "apps/admin",
+      "classification": "protected-original",
+      "role": "approved removal of inaccessible private admin gitlink",
+      "coreChangeRequest": "CCR-020"
+    },
+    {
+      "path": "scripts/architecture/check.test.ts",
+      "classification": "new",
+      "role": "architecture import and dependency tests"
+    },
+    {
+      "path": "scripts/architecture/check.ts",
+      "classification": "new",
+      "role": "architecture command boundary"
+    },
+    {
+      "path": "architecture/policy.json",
+      "classification": "new",
+      "role": "machine-readable placement policy"
+    },
+    {
+      "path": "architecture/slices/architecture-local-ci.json",
+      "classification": "new",
+      "role": "exact path declaration for this governance slice"
+    },
+    {
+      "path": "docs/architecture-governance.md",
+      "classification": "new",
+      "role": "architecture enforcement manual"
+    },
+    {
+      "path": "docs/file-placement.md",
+      "classification": "new",
+      "role": "file placement decision manual"
+    },
+    {
+      "path": "scripts/architecture/checker.ts",
+      "classification": "new",
+      "role": "placement enforcement composition"
+    },
+    {
+      "path": "scripts/architecture/git.ts",
+      "classification": "new",
+      "role": "pinned-baseline Git adapter"
+    },
+    {
+      "path": "scripts/architecture/imports.ts",
+      "classification": "new",
+      "role": "import and workspace dependency analysis"
+    },
+    {
+      "path": "scripts/architecture/placement.test.ts",
+      "classification": "new",
+      "role": "placement policy contract tests"
+    },
+    {
+      "path": "scripts/architecture/placement.ts",
+      "classification": "new",
+      "role": "pure file placement rules"
+    },
+    {
+      "path": "scripts/architecture/policy.ts",
+      "classification": "new",
+      "role": "policy and slice-manifest loading"
+    },
+    {
+      "path": "scripts/architecture/tsconfig.json",
+      "classification": "new",
+      "role": "architecture tooling TypeScript configuration"
+    },
+    {
+      "path": "scripts/architecture/types.ts",
+      "classification": "new",
+      "role": "placement policy contracts"
+    },
+    {
+      "path": "scripts/ci/install-hooks.ts",
+      "classification": "new",
+      "role": "repository hook installer"
+    },
+    {
+      "path": "scripts/ci/local.ts",
+      "classification": "new",
+      "role": "single local verification entry point"
+    }
+  ]
+}
