@@ -10,6 +10,12 @@
       "role": "remote architecture verification"
     },
     {
+      "path": ".github/workflows/chromatic.yml",
+      "classification": "protected-original",
+      "role": "inherited visual-regression workflow with public Supabase runtime configuration",
+      "coreChangeRequest": "CCR-025"
+    },
+    {
       "path": ".githooks/pre-commit",
       "classification": "new",
       "role": "fast local structure gate"
