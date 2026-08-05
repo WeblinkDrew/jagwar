@@ -1,0 +1,63 @@
+{
+  "repository_type": "monorepo",
+  "baseline": "423e2e924366419e418ee049093872d535eea41a",
+  "parts": [
+    {
+      "id": "web-app",
+      "name": "Web application",
+      "root_path": "apps/web",
+      "project_type": "web",
+      "entry_points": [
+        "apps/web/client/src/app/layout.tsx",
+        "apps/web/client/src/server/api/root.ts",
+        "apps/web/client/src/app/api/chat/route.ts"
+      ]
+    },
+    {
+      "id": "backend",
+      "name": "Supabase backend",
+      "root_path": "apps/backend",
+      "project_type": "backend",
+      "entry_points": [
+        "apps/backend/supabase/config.toml",
+        "apps/backend/supabase/migrations"
+      ]
+    },
+    {
+      "id": "shared-packages",
+      "name": "Shared packages",
+      "root_path": "packages",
+      "project_type": "library",
+      "entry_points": [
+        "packages/ai/src/index.ts",
+        "packages/db/src/index.ts",
+        "packages/code-provider/src/index.ts",
+        "packages/ui/src/index.ts"
+      ]
+    },
+    {
+      "id": "docs-site",
+      "name": "Documentation site",
+      "root_path": "docs",
+      "project_type": "web",
+      "entry_points": [
+        "docs/src/app/layout.tsx",
+        "docs/src/app/[[...slug]]/page.tsx"
+      ]
+    }
+  ],
+  "integration_points": [
+    { "from": "web-app", "to": "backend", "type": "Supabase Auth/PostgreSQL/Storage/Realtime" },
+    { "from": "web-app", "to": "shared-packages", "type": "Bun workspace imports" },
+    { "from": "docs-site", "to": "shared-packages", "type": "@onlook/ui workspace import" }
+  ],
+  "blockers": [],
+  "resolved_target_divergences": [
+    {
+      "id": "OD-15",
+      "upstream_path": "apps/admin",
+      "pinned_commit": "3dd1caaab9137203156e59fd48a72d0ef82b942d",
+      "resolution": "Jagwar intentionally removes the unavailable private upstream admin dependency under approved CCR-019 through CCR-022."
+    }
+  ]
+}

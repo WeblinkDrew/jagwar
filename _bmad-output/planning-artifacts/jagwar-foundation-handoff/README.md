@@ -1,7 +1,7 @@
 ---
 title: Jagwar Business Workflows — Onlook Foundation Handoff
 status: product-handoff-complete
-implementationReadiness: blocked-pending-target-architecture-decisions
+implementationReadiness: not-ready-gated-after-approved-course-correction
 created: 2026-07-28
 updated: 2026-07-28
 targetFoundation: Onlook
@@ -48,6 +48,8 @@ This package is complete as a product handoff. It is intentionally **not yet imp
 - an additive module/feature map that follows Onlook's repository structure and identifies every anticipated original-file change separately;
 - a protected additive AI-context seam for Jagwar business facts, or an approved per-file Core Change Request if no seam exists.
 
+The 2026-07-28 target review resolved the customer ownership, persistence, commercial-authority, module-map, and additive AI-composition decisions and selected durable/project paths subject to executable preflights. Andrew then approved the BMAD Correct Course proposal and dependency-safe sprint order. Andrew also approved and implemented the OD-15 target-fork resolution: Jagwar intentionally removes the unavailable private upstream admin gitlink, script, and lock records, and pinned Bun now completes a frozen install. Story 1.4a has since proven OD-11's pinned durable substrate and adopted its numeric operating budgets. Remaining first-slice gates are exact per-file Core Change Request approval, the OD-12 personalized editable fixture proof, and each applicable deterministic/provider/policy proof. OD-13 still gates the design of a future target-native operator surface.
+
 ## Reading order
 
 1. `index.md` — concise map, authority hierarchy, and implementation gate.
@@ -60,7 +62,7 @@ This package is complete as a product handoff. It is intentionally **not yet imp
 8. `03-domain-model-and-rules.md` — entities, state machines, invariants, and event meanings.
 9. `04-ux-and-information-architecture.md` — required surfaces, workflows, states, and accessibility.
 10. `05-integration-contracts.md` — provider-neutral seams for discovery, qualification, outreach, billing, usage, and durable operations.
-11. `06-epics-and-stories.md` — product backlog draft and acceptance criteria; dependency order is finalized only after the target architecture gate.
+11. `06-epics-and-stories.md` — authoritative parent backlog and acceptance criteria, reconciled with the approved dependency-safe Correct Course sequence.
 12. `07-donor-inventory-and-migration.md` — what exists in donor Telio, what may be reused, and what must be re-expressed for Jagwar.
 13. `08-testing-and-acceptance.md` — automated and browser acceptance gates.
 14. `09-risks-and-open-decisions.md` — unresolved product, compliance, target architecture, and vendor decisions.

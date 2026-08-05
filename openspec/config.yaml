@@ -1,0 +1,35 @@
+schema: spec-driven
+strict_tdd: true
+context: |
+  Jagwar is a Bun 1.3.1 TypeScript monorepo forked from Onlook. Workspaces live under apps/*, packages/*, tooling/*, apps/web/*, and docs. The primary product runtime is a Next.js 16 App Router application at apps/web/client with React 19, tRPC, Zod, Drizzle/Supabase persistence, Tailwind CSS, next-intl, and Vitest/Storybook browser testing. Reusable capability contracts belong in focused packages; server orchestration belongs under apps/web/client/src/server/services/<capability>; transport belongs under apps/web/client/src/server/api/routers/<capability>; persistence schemas belong under packages/db/src/schema/<capability>. Follow AGENTS.md, docs/architecture-governance.md, and docs/file-placement.md. Preserve the pinned Onlook baseline, require exact Core Change Request approval for protected paths, declare governed implementation paths in architecture/slices/*.json, and never edit generated output, bun.lock, or unrelated dirty work.
+phase_rules:
+  init:
+    - Keep initialization minimal and non-destructive.
+    - Treat OpenSpec files as authoritative when another artifact backend is unavailable.
+  specify:
+    - Use the assigned authoritative input and preserve its acceptance criteria and constraints.
+    - Record ambiguities and governance blockers; do not silently broaden scope.
+  design:
+    - Respect runtime boundaries, public workspace entry points, and dependency direction.
+    - Identify protected baseline paths and required exact Core Change Requests before implementation.
+  tasks:
+    - Order work for strict test-driven development with failing tests before production changes.
+    - Include focused verification, architecture checks, and regression gates.
+  implement:
+    - Follow red-green-refactor and keep diffs small and capability-local.
+    - Do not run db:gen; database generation is maintainer-only.
+  verify:
+    - Report every command and outcome; never claim completion while required checks fail.
+testing:
+  runner: Bun test with Vitest 4 and Storybook browser projects where applicable
+  package_manager: bun@1.3.1
+  strict_tdd: true
+  commands:
+    unit: bun test
+    typecheck: bun run typecheck
+    lint_web: bun --filter @onlook/web-client lint
+    storybook_browser: cd apps/web/client && bunx vitest run --project storybook
+    architecture: bun scripts/architecture/check.ts --changed
+    structure_gate: bun scripts/ci/local.ts --mode structure
+    pre_push_gate: bun scripts/ci/local.ts --mode pre-push
+    diff_check: git diff --check

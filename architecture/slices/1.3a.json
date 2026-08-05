@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "slice": "1.3a",
+    "capability": "business-policy",
+    "owningRuntime": "reusable-package",
+    "paths": [
+        {
+            "path": "architecture/slices/1.3a.json",
+            "classification": "new",
+            "role": "exact governed-path declaration for the immutable business-policy contract slice"
+        },
+        {
+            "path": "packages/business-policy/package.json",
+            "classification": "new",
+            "role": "focused capability package manifest"
+        },
+        {
+            "path": "packages/business-policy/tsconfig.json",
+            "classification": "new",
+            "role": "package TypeScript boundary"
+        },
+        {
+            "path": "packages/business-policy/eslint.config.js",
+            "classification": "new",
+            "role": "package lint configuration"
+        },
+        {
+            "path": "packages/business-policy/src/index.ts",
+            "classification": "new",
+            "role": "intentional public package entry point"
+        },
+        {
+            "path": "packages/business-policy/src/release.ts",
+            "classification": "new",
+            "role": "immutable policy release, registry, canonical hash, and snapshot contracts"
+        },
+        {
+            "path": "packages/business-policy/src/fixtures.ts",
+            "classification": "new",
+            "role": "deterministic non-production qualification fixture releases"
+        },
+        {
+            "path": "packages/business-policy/test/release.test.ts",
+            "classification": "new",
+            "role": "public release contract tests"
+        },
+        {
+            "path": "packages/business-policy/test/fixtures.test.ts",
+            "classification": "new",
+            "role": "deterministic fixture contract tests"
+        }
+    ]
+}

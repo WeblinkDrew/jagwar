@@ -41,7 +41,9 @@ The initial draft was judged strong as a product specification but not implement
 
 ## Remaining intentional blockers
 
-The documents do not pretend to know target facts that must be verified in a writable Onlook-derived repository. Implementation remains blocked until OD-1, OD-2, OD-3, OD-10, OD-11, OD-12, and OD-13 are resolved. Provider, policy, and compliance choices OD-4 through OD-9 block their named stories or production enablement. OD-14 intentionally blocks final Jagwar pricing and customer-facing billing enforcement until representative cost evidence exists.
+The writable-target review resolved OD-1, OD-2, OD-3, and OD-10; mapped OD-12's additive native project path subject to executable fixture proof; and completed OD-13 for accessible customer modules while leaving operator role/placement gated. Story 1.4a subsequently proved OD-11's pinned durable substrate and numeric operating budgets. The approved Correct Course sequence resolves the backlog's forward dependencies without weakening parent acceptance criteria.
+
+Implementation remains gated by exact per-file Core Change Request approval, the OD-12 personalized editable fixture proof, and each story's provider/policy/legal decision. OD-11's environment proof is complete. OD-15 is resolved by the approved target-fork removal and verified frozen install; Jagwar does not claim parity with the unavailable private upstream admin application. OD-13 may approve a target-native Jagwar operator surface only if it reuses existing Onlook authorities. OD-14 intentionally blocks final Jagwar pricing and customer-facing billing enforcement until representative cost evidence exists.
 
 These are target discovery and product decisions, not requests to cut over production. Hosting, sandbox, and custom-domain optimization remain deferred.
 

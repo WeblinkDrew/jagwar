@@ -1,0 +1,116 @@
+# generated: 2026-07-28T13:45:03-07:00
+# last_updated: 2026-07-29T15:25:30-07:00
+# project: Jagwar
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: /Users/andrewsimic/Developer/Jagwar/_bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# Action Item Status:
+#   - open: Committed during a retrospective, not yet addressed
+#   - in-progress: Actively being worked on
+#   - done: Completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+# - Retrospective appends its action items to action_items; sprint-status surfaces open ones
+
+generated: 2026-07-28T13:45:03-07:00
+last_updated: 2026-07-29T15:25:30-07:00
+project: Jagwar
+project_key: NOKEY
+tracking_system: file-system
+story_location: /Users/andrewsimic/Developer/Jagwar/_bmad-output/implementation-artifacts
+
+development_status:
+  epic-1: in-progress
+  1-1-map-jagwar-records-to-onlook-workspace-authority: done
+  1-2-add-native-commercial-navigation-and-route-boundaries: backlog
+  1-3-establish-versioned-business-policy-authority: backlog
+  1-3a-immutable-policy-contract-and-deterministic-fixture-releases: done
+  1-3b-authorized-runtime-policy-operation: ready-for-dev
+  1-4-establish-one-durable-operation-authority: backlog
+  1-4a-prove-pinned-durable-substrate: done
+  1-4b-implement-the-durable-operation-core: backlog
+  1-5-establish-the-onlook-native-jagwar-module-map-and-protected-core-ledger: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-define-and-verify-the-normalized-candidate-boundary: backlog
+  2-2-run-bounded-durable-discovery: backlog
+  2-3-save-and-replay-discovery-runs: backlog
+  2-4-inspect-website-opportunity-with-versioned-evidence: backlog
+  2-5-enrich-phone-intelligence-independently: backlog
+  2-6-deliver-the-onlook-native-find-leads-workspace: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-add-manual-leads-without-duplicates: backlog
+  3-2-manage-the-six-stage-pipeline-accessibly: backlog
+  3-3-provide-a-complete-lead-workspace: backlog
+  3-4-preserve-suppression-archive-and-activity-truth: backlog
+  3-5-record-and-withdraw-outreach-consent-evidence: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-prove-the-onlook-native-prospect-seeding-path: backlog
+  4-2-create-a-prospect-project-from-a-lead: backlog
+  4-3-associate-an-existing-authorized-onlook-project: backlog
+  4-4-open-the-authoritative-onlook-editor-from-the-lead: backlog
+  4-5-resolve-and-snapshot-an-outreach-safe-publication: backlog
+  epic-4-retrospective: optional
+
+  epic-5: backlog
+  5-1-define-and-contract-test-the-outreach-connector-boundary: backlog
+  5-2-complete-managed-whatsapp-connection-and-approval: backlog
+  5-3-evaluate-recipient-consent-template-and-publication-compliance: backlog
+  5-4-send-one-exact-published-preview: backlog
+  5-5-fan-out-a-multi-lead-personalized-send: backlog
+  5-6-reconcile-provider-delivery-events-and-preserve-history: backlog
+  epic-5-retrospective: optional
+
+  epic-6: backlog
+  6-1-build-the-authoritative-activation-projection: backlog
+  6-2-show-live-5-2-1-progress-and-next-action: backlog
+  6-3-measure-target-operating-costs-without-customer-billing: backlog
+  6-4-approve-the-jagwar-commercial-model-from-measured-evidence: backlog
+  6-5-reconcile-one-onlook-billing-authority-and-derive-jagwar-entitlement: backlog
+  6-6-complete-approved-checkout-and-billing-self-service: backlog
+  6-7-enforce-approved-usage-and-present-it-truthfully: backlog
+  6-8-allocate-approved-allowances-and-enforce-the-fair-5-2-1-gate: backlog
+  6-9-show-a-native-commercial-overview: backlog
+  epic-6-retrospective: optional
+
+  epic-7: backlog
+  7-1-manage-provider-health-and-connections-safely: backlog
+  7-2-review-and-safely-operate-versioned-business-policies: backlog
+  7-3-import-donor-business-data-through-an-explicit-migration-contract: backlog
+  7-4-certify-the-end-to-end-commercial-journey: backlog
+  7-5-certify-performance-privacy-retention-and-correlation: backlog
+  7-6-keep-hosting-and-domain-optimization-deferred-and-observable: backlog
+  epic-7-retrospective: optional

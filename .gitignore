@@ -47,3 +47,5 @@ mise.toml
 
 # Temporary files
 .tmp/
+# Local Pi runtime state
+.atl/

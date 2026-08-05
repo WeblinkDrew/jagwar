@@ -57,6 +57,14 @@
       "approvedContentSha256": "48bebccce78cc01221d71d9f1b0ab6d20483370473840c3045e441e9ef97a59c",
       "scope": "Map the two browser-safe Supabase repository variables into inherited Chromatic CI.",
       "record": "architecture/core-change-requests/CCR-025-chromatic-supabase-env.md"
+    },
+    {
+      "requestId": "CCR-026",
+      "path": "AGENTS.md",
+      "status": "approved",
+      "approvedContentSha256": "59a2aff547a51adeb4485f3e0da51c13f0c987fb658f72fab34202a65d4f3eb0",
+      "scope": "Rewrite the root agent guide as concise LLM-scannable repository rules.",
+      "record": "architecture/core-change-requests/CCR-026-AGENTS-LLM-RULES.md"
     }
   ]
 }

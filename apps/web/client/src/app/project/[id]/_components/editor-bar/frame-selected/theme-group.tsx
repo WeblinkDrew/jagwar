@@ -59,4 +59,4 @@ export function ThemeGroup({ frameData }: { frameData: FrameData }) {
             </HoverOnlyTooltip>
         </>
     );
-} 
+}

@@ -1,0 +1,84 @@
+import { NextResponse } from "next/server";
+import { verifySignedRequest } from "./signature";
+
+export const runtime = "nodejs";
+export const preferredRegion = "iad1";
+export const maxDuration = 10;
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+async function callPreflightRpc(name: string, payload: Record<string, unknown>): Promise<unknown> {
+    if (!supabaseUrl || !supabaseAnonKey) {
+        throw new Error("Supabase preview configuration is unavailable");
+    }
+    const response = await fetch(`${supabaseUrl}/rest/v1/rpc/${name}`, {
+        method: "POST",
+        headers: {
+            apikey: supabaseAnonKey,
+            authorization: `Bearer ${supabaseAnonKey}`,
+            "content-type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(2_000),
+    });
+    if (!response.ok) {
+        throw new Error(`Preflight RPC ${name} failed with ${response.status}`);
+    }
+    return response.json();
+}
+
+export async function POST(request: Request) {
+    const startedAt = performance.now();
+    if (process.env.VERCEL_TARGET_ENV !== "preflight" || process.env.JAGWAR_PREFLIGHT_ENABLED !== "true") {
+        return NextResponse.json({ accepted: false, reason: "disabled" }, { status: 404 });
+    }
+    const secret = process.env.JAGWAR_PREFLIGHT_HMAC_SECRET;
+    if (!secret) {
+        return NextResponse.json({ accepted: false, reason: "misconfigured" }, { status: 503 });
+    }
+
+    const body = await request.text();
+    const verification = await verifySignedRequest(
+        secret,
+        {
+            body,
+            nonce: request.headers.get("x-jagwar-nonce"),
+            signature: request.headers.get("x-jagwar-signature"),
+            timestamp: request.headers.get("x-jagwar-timestamp"),
+        },
+        Math.floor(Date.now() / 1_000),
+        async (nonce, timestamp) =>
+            (await callPreflightRpc("jagwar_preflight_claim_nonce", {
+                request_nonce: nonce,
+                signed_at_epoch: timestamp,
+            })) === true,
+    );
+
+    if (!verification.ok) {
+        const status = verification.reason === "replayed_nonce" ? 409 : 401;
+        return NextResponse.json({ accepted: false, reason: verification.reason }, { status });
+    }
+
+    const parsed = JSON.parse(body) as { traceId?: unknown; workMs?: unknown };
+    if (typeof parsed.traceId !== "string" || !/^[A-Za-z0-9_-]{1,80}$/.test(parsed.traceId)) {
+        return NextResponse.json({ accepted: false, reason: "invalid_body" }, { status: 400 });
+    }
+    const workMs = parsed.workMs ?? 0;
+    if (!Number.isInteger(workMs) || Number(workMs) < 0 || Number(workMs) > 2_000) {
+        return NextResponse.json({ accepted: false, reason: "invalid_work_budget" }, { status: 400 });
+    }
+    if (Number(workMs) > 0) {
+        await new Promise((resolve) => setTimeout(resolve, Number(workMs)));
+    }
+    await callPreflightRpc("jagwar_preflight_record_work", {
+        request_nonce: verification.nonce,
+        request_trace_id: parsed.traceId,
+    });
+
+    return NextResponse.json({
+        accepted: true,
+        durationMs: Number((performance.now() - startedAt).toFixed(3)),
+        traceId: parsed.traceId,
+    });
+}

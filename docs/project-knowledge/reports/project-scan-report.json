@@ -1,0 +1,234 @@
+{
+  "workflow_version": "1.2.0",
+  "timestamps": {
+    "started": "2026-07-28T19:47:57Z",
+    "last_updated": "2026-07-28T19:54:51Z",
+    "completed": "2026-07-28T19:54:51Z"
+  },
+  "mode": "initial_scan",
+  "scan_level": "deep",
+  "project_root": "/Users/andrewsimic/Developer/Jagwar",
+  "project_knowledge": "/Users/andrewsimic/Developer/Jagwar/docs/project-knowledge",
+  "completed_steps": [
+    {
+      "step": "step_1",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:48:10Z",
+      "summary": "Classified the Bun workspace as a monorepo with four logical parts: web application, Supabase backend, shared packages, and documentation site."
+    },
+    {
+      "step": "step_2",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:48:30Z",
+      "summary": "Inventoried root and part-level README, contribution, architecture, development, license, and Jagwar authority documents."
+    },
+    {
+      "step": "step_3",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:49:00Z",
+      "summary": "Mapped Next.js, React, tRPC, Supabase, Drizzle, AI SDK, CodeSandbox, Freestyle, Stripe, Tailwind, and Bun workspace technologies."
+    },
+    {
+      "step": "step_4",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:51:30Z",
+      "outputs": [
+        "api-contracts-web-app.md",
+        "data-models-web-app.md",
+        "component-inventory-web-app.md"
+      ],
+      "summary": "Documented API, persistence, authorization, billing, AI composition, project/publication, operation-state, and UI authorities from critical source batches."
+    },
+    {
+      "step": "step_5",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:52:10Z",
+      "outputs": [
+        "source-tree-analysis.md"
+      ],
+      "summary": "Generated an annotated source tree and entry-point map."
+    },
+    {
+      "step": "step_6",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:53:15Z",
+      "outputs": [
+        "development-guide.md",
+        "deployment-guide.md",
+        "contribution-guide.md"
+      ],
+      "summary": "Documented setup, verification, deployment, CI, contribution, license, naming, and OD-15 constraints."
+    },
+    {
+      "step": "step_7",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:52:50Z",
+      "outputs": [
+        "integration-architecture.md"
+      ],
+      "summary": "Mapped cross-part and external-provider integrations and core lifecycle sequences."
+    },
+    {
+      "step": "step_8",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:52:40Z",
+      "outputs": [
+        "architecture-web-app.md",
+        "architecture-backend.md",
+        "architecture-shared-packages.md",
+        "architecture-docs-site.md"
+      ],
+      "summary": "Generated architecture documents for all four logical parts."
+    },
+    {
+      "step": "step_9",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:53:40Z",
+      "outputs": [
+        "project-overview.md",
+        "project-parts.json"
+      ],
+      "summary": "Generated supporting project overview and machine-readable part metadata."
+    },
+    {
+      "step": "step_10",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:54:00Z",
+      "outputs": [
+        "index.md"
+      ],
+      "summary": "Generated the master project-knowledge index with no incomplete-document markers."
+    },
+    {
+      "step": "step_11",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:54:40Z",
+      "summary": "Validated JSON, links, naming, baseline-new-file classification, Markdown markers, and worktree scope; executable product tests remain blocked by OD-15."
+    },
+    {
+      "step": "step_12",
+      "status": "completed",
+      "timestamp": "2026-07-28T19:54:51Z",
+      "summary": "Workflow complete; all outputs are new documentation files and no protected baseline file was edited."
+    }
+  ],
+  "current_step": "completed",
+  "project_types": [
+    {
+      "part_id": "web-app",
+      "project_type_id": "web",
+      "display_name": "Web application"
+    },
+    {
+      "part_id": "backend",
+      "project_type_id": "backend",
+      "display_name": "Supabase backend"
+    },
+    {
+      "part_id": "shared-packages",
+      "project_type_id": "library",
+      "display_name": "Shared packages"
+    },
+    {
+      "part_id": "docs-site",
+      "project_type_id": "web",
+      "display_name": "Documentation site"
+    }
+  ],
+  "findings": {
+    "project_classification": {
+      "repository_type": "monorepo",
+      "parts_count": 4,
+      "primary_language": "TypeScript",
+      "architecture_type": "Next.js route-local full stack with Supabase/Drizzle and focused packages"
+    },
+    "technology_stack": [
+      {
+        "part_id": "web-app",
+        "tech_summary": "Next.js 16, React 19, tRPC, Supabase, MobX, AI SDK, Tailwind 4"
+      },
+      {
+        "part_id": "backend",
+        "tech_summary": "Supabase Auth, PostgreSQL, Storage, Realtime, SQL migrations"
+      },
+      {
+        "part_id": "shared-packages",
+        "tech_summary": "Focused TypeScript packages for AI, DB, providers, models, Stripe, UI, parsing, Git, email, and utilities"
+      },
+      {
+        "part_id": "docs-site",
+        "tech_summary": "Next.js 16, React 19, Fumadocs, Tailwind 4"
+      }
+    ],
+    "batches_completed": [
+      {
+        "path": "apps/web/client/src",
+        "files_scanned": 54,
+        "summary": "Inspected auth/tRPC, project/editor, publication, billing/usage, AI creation/chat, UI root, routes, tests, and configuration authorities."
+      },
+      {
+        "path": "apps/backend",
+        "files_scanned": 12,
+        "summary": "Inspected Supabase configuration, migration inventory, core RLS policies, realtime triggers, and backend scripts."
+      },
+      {
+        "path": "packages/ai",
+        "files_scanned": 16,
+        "summary": "Inspected public exports, agent stream, context registry/classes, prompt hydration, toolset, and tests."
+      },
+      {
+        "path": "packages/db",
+        "files_scanned": 38,
+        "summary": "Inspected schema catalog, identity/project/publication/billing models, mappers/entry points, defaults, and client boundary."
+      },
+      {
+        "path": "packages/code-provider",
+        "files_scanned": 4,
+        "summary": "Inspected provider contract, factory, and adapter inventory."
+      },
+      {
+        "path": "packages/models",
+        "files_scanned": 6,
+        "summary": "Inspected project creation, chat message/context, project role, and shared contracts."
+      },
+      {
+        "path": "packages/stripe",
+        "files_scanned": 6,
+        "summary": "Inspected public Stripe client/functions/types and webhook integration references."
+      },
+      {
+        "path": "packages/ui",
+        "files_scanned": 12,
+        "summary": "Inspected public exports, primitive inventory, global tokens/CSS, Tailwind config, icons authority, and hooks."
+      },
+      {
+        "path": "docs",
+        "files_scanned": 10,
+        "summary": "Inspected the documentation app, architecture/setup content, and protected baseline inventory."
+      }
+    ]
+  },
+  "outputs_generated": [
+    "project-scan-report.json",
+    "index.md",
+    "project-overview.md",
+    "source-tree-analysis.md",
+    "architecture-web-app.md",
+    "architecture-backend.md",
+    "architecture-shared-packages.md",
+    "architecture-docs-site.md",
+    "integration-architecture.md",
+    "api-contracts-web-app.md",
+    "data-models-web-app.md",
+    "component-inventory-web-app.md",
+    "development-guide.md",
+    "deployment-guide.md",
+    "contribution-guide.md",
+    "project-parts.json"
+  ],
+  "resume_instructions": "Workflow complete. Use docs/project-knowledge/index.md as the project-knowledge entry point.",
+  "validation_status": {
+    "last_validated": "2026-07-28T19:54:51Z",
+    "validation_errors": []
+  }
+}

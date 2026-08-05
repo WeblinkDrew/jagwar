@@ -34,8 +34,8 @@ At pin time, no original Onlook tracked file differed from the pinned commit. BM
 
 The separate checkout at `/Users/andrewsimic/Developer/Onlook/onlook` remains read-only reference material and is not the Jagwar implementation target.
 
-## Dependency bootstrap finding
+## Dependency bootstrap finding and approved fork divergence
 
-The pinned `.gitmodules` declares `apps/admin` at commit `3dd1caaab9137203156e59fd48a72d0ef82b942d` from `https://github.com/onlook-dev/admin.git`. That repository is unavailable to the authenticated account and also cannot be resolved publicly. The existing Onlook reference checkout does not contain the submodule content.
+The pinned upstream baseline declared `apps/admin` at commit `3dd1caaab9137203156e59fd48a72d0ef82b942d` from the inaccessible private repository `https://github.com/onlook-dev/admin.git`. The read-only Onlook reference checkout confirms its normal web application runs while that gitlink is empty and no `@onlook/admin` workspace link exists.
 
-Because the root workspace includes `apps/*` and the committed `bun.lock` contains `@onlook/admin`, both the system Bun and the repository-declared Bun `1.3.1` reject `bun install --frozen-lockfile` while the submodule is absent. The lockfile and root workspace configuration were not changed. Resolve OD-15 by obtaining legitimate access to the pinned submodule or by adopting an upstream-authorized public resolution before dependency installation or baseline test claims.
+Andrew approved CCR-019 through CCR-022 on 2026-07-28. The writable Jagwar target intentionally removes the upstream `.gitmodules` registration, `apps/admin` gitlink, root `dev:admin` script, and generated lock records. Jagwar does not ship or claim parity with the unavailable private application. Pinned Bun 1.3.1 now completes a frozen install of the declared Jagwar workspace, and the existing web typecheck passes. Future upstream synchronization must preserve or deliberately revisit this recorded fork divergence.

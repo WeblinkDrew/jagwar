@@ -1,161 +1,195 @@
-## Onlook Agents Guide
+# Jagwar Agent Rules
 
-Actionable rules for repo agents—keep diffs minimal, safe, token‑efficient.
+Rules for automated agents working in this repository. Keep changes minimal, safe, and reviewable.
 
-### Purpose & Scope
+## References
 
-- Audience: automated coding agents working within this repository.
-- Goal: small, correct diffs aligned with the project’s architecture.
-- Non-goals: editing generated artifacts, lockfiles, or `node_modules`.
+Load only when relevant:
 
-### Repo Map
+- Architecture governance: `docs/architecture-governance.md`
+- File placement: `docs/file-placement.md`
+- Architecture approvals: `architecture/core-change-approvals.json`
+- Root workspace configuration: `package.json`
+- Web client configuration: `apps/web/client/tsconfig.json`
 
-- Monorepo managed by Bun workspaces (see root `package.json`).
-- App: `apps/web/client` (Next.js App Router + TailwindCSS).
-- API routes: `apps/web/client/src/server/api/routers/*`, aggregated in
-  `apps/web/client/src/server/api/root.ts`.
-- Shared utilities: `packages/*` (e.g., `packages/utility`).
+## Repository Map
 
-### Stack & Runtimes
+- Monorepo: Bun workspaces
+- Web app: `apps/web/client` — Next.js App Router + TailwindCSS
+- API routers: `apps/web/client/src/server/api/routers/**`
+- API composition root: `apps/web/client/src/server/api/root.ts`
+- Shared packages: `packages/*`
 
-- UI: Next.js App Router, TailwindCSS.
-- API: tRPC + Zod (`apps/web/client/src/server/api/*`).
-- Package manager: Bun only — use Bun for all installs and scripts; do not use
-  npm, yarn, or pnpm.
+## All Changes
 
-### Agent Priorities
+REJECT if:
 
-- Correctness first: minimal scope and targeted edits.
-- Respect client/server boundaries in App Router.
-- Prefer local patterns and existing abstractions; avoid one-off frameworks.
-- Do not modify build outputs, generated files, or lockfiles.
-- Use Bun for all scripts; do not introduce npm/yarn.
-- Avoid running the local dev server in automation contexts.
-- Respect type safety and
+- Generated output, lockfiles, `.next`, or `node_modules` are edited
+- Scope expands beyond the requested capability without approval
+- Existing abstractions are replaced by one-off frameworks without justification
+- A protected Onlook baseline file is changed without an exact approved Core Change Request
+- A new governed path lacks its required `architecture/slices/*.json` declaration
 
-### Architecture Change Protocol
+REQUIRE:
 
-- For new features, packages, runtimes, or substantial refactors, use the
-  `structure-modular-codebase` workflow when available and read
-  `docs/architecture-governance.md`.
-- Name the owning runtime and product/domain capability before creating files.
-- Prefer capability-local or route-local modules; do not create generic dumping
-  packages or add private `@onlook/*/src/*` imports.
-- Treat the pinned Onlook baseline as inherited and grandfathered. Do not
-  refactor it merely to satisfy new Jagwar conventions.
-- Before editing any protected baseline file, stop for its exact approved Core
-  Change Request.
-- Run `bun scripts/architecture/check.ts --changed` before handoff and report
-  architectural warnings or intentional exceptions.
+- Small, targeted diffs
+- Existing repository patterns before new abstractions
+- Client/server runtime boundaries to remain explicit
+- Errors, failed checks, and intentional exceptions to be reported
 
-### Next.js App Router
+PREFER:
 
-- Default to Server Components. Add `use client` when using events,
-  state/effects, browser APIs, or client-only libs.
-- App structure: `apps/web/client/src/app/**` (`page.tsx`, `layout.tsx`,
-  `route.ts`).
-- Client providers live behind a client boundary (e.g.,
-  `apps/web/client/src/trpc/react.tsx`).
-- Example roots: `apps/web/client/src/app/layout.tsx` (RSC shell, providers
-  wired, scripts gated by env).
-- Components using `mobx-react-lite`'s `observer` must be client components
-  (include `use client`).
+- Capability-local or route-local modules
+- Narrow searches and focused file reads
+- Colocation of behavior with its owning capability
 
-### tRPC API
+## Tooling
 
-- Routers live in `apps/web/client/src/server/api/routers/**` and must be
-  exported from `apps/web/client/src/server/api/root.ts`.
-- Use `publicProcedure`/`protectedProcedure` from
-  `apps/web/client/src/server/api/trpc.ts`; validate inputs with Zod.
-- Serialization handled by SuperJSON; return plain objects/arrays.
-- Client usage via `apps/web/client/src/trpc/react.tsx` (React Query + tRPC
-  links).
+REJECT if:
 
-### Auth & Supabase
+- npm, Yarn, or pnpm is used
+- The local development server is started in automation
+- `db:gen` is run; it is maintainer-only
 
-- Server-side client: `apps/web/client/src/utils/supabase/server.ts` (uses Next
-  headers/cookies). Use in server components, actions, and routes.
-- Browser client: `apps/web/client/src/utils/supabase/client/index.ts` for
-  client components.
-- Never pass server-only clients into client code.
+REQUIRE:
 
-### Env & Config
+- Bun for installs and scripts
+- `bun run db:push` for approved local database updates
 
-- Define/validate env vars in `apps/web/client/src/env.ts` via
-  `@t3-oss/env-nextjs`.
-- Expose browser vars with `NEXT_PUBLIC_*` and declare in the `client` schema.
-- Prefer `env` from `@/env`. In server-only helpers (e.g., base URL in
-  `src/trpc/helpers.ts`), read `process.env` only for deployment vars like
-  `VERCEL_URL`/`PORT`. Never use `process.env` in client code; in shared
-  modules, guard with `typeof window === 'undefined'`.
-- Import `./src/env` in `apps/web/client/next.config.ts` to enforce validation.
+## Architecture
 
-### Imports & Paths
+For new features, packages, runtimes, or substantial refactors:
 
-- Use path aliases: `@/*` and `~/*` map to `apps/web/client/src/*` (see
-  `apps/web/client/tsconfig.json`).
-- Do not import server-only modules into client components. Limited exception:
-  editor modules that already use `path`; reuse only there. Never import
-  `process` in client code.
-- Split code by environment if needed (server file vs client file).
+REJECT if:
 
-### MobX + React Stores
+- Generic dumping directories or generic Jagwar packages are introduced
+- Private `@onlook/*/src/*` imports are added
+- A package imports application-private code
+- A workspace dependency is undeclared or creates a cycle
+- Client modules import server-only modules
+- The inherited Onlook baseline is refactored only to satisfy new Jagwar conventions
 
-- Create store instances with `useState(() => new Store())` for stability across
-  renders.
-- Keep active store in `useRef`; clean up async with
-  `setTimeout(() => storeRef.current?.clear(), 0)` to avoid route-change races.
-- Avoid `useMemo` for store instances; React may drop memoized values leading to
-  data loss.
-- Avoid putting the store instance in effect deps if it loops; split concerns
-  (e.g., project vs branch).
-- `observer` components are client-only. Place one client boundary at the
-  feature entry; child observers need not include `use client` (e.g.,
-  `apps/web/client/src/app/project/[id]/_components/main.tsx`).
-- Example store: `apps/web/client/src/components/store/editor/engine.ts:1` (uses
-  `makeAutoObservable`).
+REQUIRE:
 
-### Styling & UI
+- Read `docs/architecture-governance.md`
+- Use `structure-modular-codebase` when available
+- Name the owning runtime and product/domain capability before creating files
+- Read `docs/file-placement.md` before adding a runtime path
+- Obtain a new exact Core Change Request before editing a protected baseline file
+- Run `bun scripts/architecture/check.ts --changed` before handoff
 
-- TailwindCSS-first styling; global styles are already imported in
-  `apps/web/client/src/app/layout.tsx`.
-- Prefer existing UI components from `@onlook/ui` and local patterns.
-- Preserve dark theme defaults via `ThemeProvider` usage in layout.
+## TypeScript and Imports
 
-### Internationalization
+REJECT if:
 
-- `next-intl` is configured; provider lives in
-  `apps/web/client/src/app/layout.tsx`.
-- Strings live in `apps/web/client/messages/*`. Add/modify keys there; avoid
-  hardcoded user-facing text.
-- Keep keys stable; prefer additions over breaking renames.
+- `any` is used without explicit necessity and justification
+- Client code imports `process` or reads `process.env`
+- Server-only modules are imported into client components
+- New Node API usage is added to client code outside existing approved editor exceptions
 
-### Common Pitfalls
+REQUIRE:
 
-- Missing `use client` where needed (events/browser APIs) causes unbound events;
-  a single boundary at the feature root is sufficient.
-- New tRPC routers not exported in `src/server/api/root.ts` (endpoints
-  unreachable).
-- Env vars not typed/exposed in `src/env.ts` cause runtime/edge failures. Prefer
-  `env`; avoid new `process.env` reads in client code.
-- Importing server-only code into client components (bundling/runtime errors).
-  Note: `path` is already used in specific client code-editor modules; avoid
-  expanding Node API usage beyond those areas.
-- Bypassing i18n by hardcoding strings instead of using message files/hooks.
-- Avoid `useMemo` to create MobX stores (risk of lost references); avoid
-  synchronous cleanup on route change (race conditions).
+- Preserve type safety
+- Use `@/*` or `~/*` for web-client source imports
+- Split shared code by runtime when client/server boundaries differ
 
-### Context Discipline (for Agents)
+## Next.js and React
 
-- Search narrowly with ripgrep; open only files you need.
-- Read small sections; avoid `node_modules`, `.next`, large assets.
-- Propose minimal diffs aligned with existing conventions; avoid wide refactors.
+REJECT if:
 
-### Notes
+- A component using events, state, effects, browser APIs, or client-only libraries lacks a client boundary
+- `mobx-react-lite` `observer` runs outside a client boundary
+- A Server Component is converted to a Client Component without necessity
 
-- Unit tests can be run with `bun test`
-- Run type checking with `bun run typecheck`
-- Apply database updates to local dev with `bun run db:push`
-- Refrain from running the dev server
-- DO NOT run `db:gen`. This is reserved for the maintainer.
-- DO NOT use any type unless necessary
+REQUIRE:
+
+- Default to Server Components
+- Add `"use client"` only at the necessary feature boundary
+- Keep client providers behind a client boundary
+
+## tRPC
+
+REJECT if:
+
+- Router input is not validated with Zod
+- A new router is not exported from `apps/web/client/src/server/api/root.ts`
+- Non-serializable values are returned
+
+REQUIRE:
+
+- Routers under `apps/web/client/src/server/api/routers/**`
+- `publicProcedure` or `protectedProcedure` from `src/server/api/trpc.ts`
+- Plain objects or arrays for SuperJSON serialization
+
+## Supabase and Environment
+
+REJECT if:
+
+- A server Supabase client reaches client code
+- Browser variables lack the `NEXT_PUBLIC_*` prefix
+- Environment variables bypass `apps/web/client/src/env.ts`
+
+REQUIRE:
+
+- Server client: `apps/web/client/src/utils/supabase/server.ts`
+- Browser client: `apps/web/client/src/utils/supabase/client/index.ts`
+- Typed environment access through `@/env`
+- `apps/web/client/next.config.ts` must import `./src/env`
+
+## MobX Stores
+
+REJECT if:
+
+- `useMemo` creates a store instance
+- Synchronous route cleanup introduces a store race
+- Store dependencies create an effect loop
+
+REQUIRE:
+
+- Create stores with `useState(() => new Store())`
+- Keep the active store in `useRef`
+- Use the established asynchronous `setTimeout(() => storeRef.current?.clear(), 0)` cleanup pattern
+
+## UI and Internationalization
+
+REJECT if:
+
+- User-facing text is hardcoded instead of added to `apps/web/client/messages/*`
+- Existing stable translation keys are broken unnecessarily
+
+PREFER:
+
+- TailwindCSS-first styling
+- Existing `@onlook/ui` and local components
+- Semantic markup
+- Existing dark-theme behavior through `ThemeProvider`
+
+## Verification
+
+Run checks appropriate to the changed scope:
+
+- Unit tests: `bun test`
+- Type checking: `bun run typecheck`
+- Architecture: `bun scripts/architecture/check.ts --changed`
+- Fast structure gate: `bun scripts/ci/local.ts --mode structure`
+- Pre-push gate: `bun scripts/ci/local.ts --mode pre-push`
+
+REQUIRE:
+
+- Report commands run and their outcomes
+- Report architectural warnings and intentional exceptions
+- Do not claim completion when required checks fail
+
+## Code Review Response
+
+When explicitly asked for a code review, the first line must be exactly:
+
+`STATUS: PASSED`
+
+or
+
+`STATUS: FAILED`
+
+For failures, list each blocking finding as:
+
+`file:line - rule violated - issue`

@@ -23,6 +23,7 @@ updated: 2026-07-28
 - Existing Onlook capabilities are not deprecated by the Jagwar rebuild.
 - Every original Onlook file is protected by per-file explicit confirmation before modification.
 - Final Jagwar pricing and customer billing gates are deferred until representative target costs are measured; internal cost telemetry starts during implementation.
+- OD-11 is proven for Story 1.4b entry: use logged Supabase PGMQ queues behind allowlisted server functions, Supabase Cron through `pg_net`, Vault-held signing credentials, and an authenticated bounded Next.js Node route. Browser and direct Data API queue access remain prohibited.
 
 ## 2. Phase-blocking decisions
 
@@ -94,6 +95,8 @@ Inventory Onlook's existing user-scoped subscription, billing-customer, usage, a
 
 Select the target-native facility for durable enqueue, lease, retry, cancellation, crash recovery, provider reconciliation, outbox/event delivery, dead-letter/operator visibility, trace correlation, and reservation release. Browser requests and in-memory route work are not candidates.
 
+**Resolved 2026-07-29 by the reviewed Story 1.4a preflight.** The approved substrate is logged PGMQ for durable queue state, allowlisted `SECURITY DEFINER` functions for least-privileged worker access, Cron plus `pg_net` for bounded HTTPS invocation, Vault-held HMAC credentials, and a database-backed nonce claim at the authenticated Next.js boundary. Every elevated function must use a fixed safe `search_path`, controlled owner, explicit execute allowlist, and `PUBLIC` revocation. The hosted target proved queue visibility/redelivery/archive behavior, local and hosted Data API isolation, actual worker-login allow/deny behavior, future-skew and no-work-on-rejection controls, credential rotation, a 9-second `pg_net` caller timeout, explicit retry visibility, correlated Cron/HTTP/route evidence, bounded concurrency, and cleanup. Story 1.4b must use the corrected numeric budgets and invariants recorded in `_bmad-output/implementation-artifacts/1-4a-durable-substrate-preflight/RUNBOOK.md`; no alternative queue, detached worker, `waitUntil`, post-response promise, or in-memory job path is approved.
+
 ### OD-12: Onlook-native prospect project seeding
 
 **Needed before:** Story 4.1 and project-generation implementation.
@@ -102,11 +105,13 @@ Pin the Onlook commit and identify the exact authorized project/source/AI/previe
 
 ### OD-13: Onlook-native module map and protected-core inventory
 
-**Needed before:** any target implementation story.
+**Status:** customer modules mapped; operator authority and target-native placement approved by Andrew on 2026-07-29. Protected baseline edits remain separately gated by exact per-file Core Change Requests.
 
 Inventory the pinned target's workspace packages, public exports, route-local features, schemas, managers/services, provider abstractions, tests, and instructions. Assign every proposed Jagwar capability to an existing pattern and a focused new-file/package/feature owner. Record every anticipated edit to a file present in the Onlook baseline separately. New Jagwar-owned files follow the approved map; original files require `CORE-CHANGE-REQUEST-TEMPLATE.md` and Andrew's explicit per-file confirmation before editing.
 
 This decision must also identify protected AI/editor zones and the existing public seam, if any, for additive `JagwarBusinessContextV1` input.
+
+The approved operator design is recorded in `../jagwar-implementation-readiness-2026-07-28/OD-13-OPERATOR-AUTHORITY.md`. Jagwar uses a guarded `/operator` route inside the existing web application, with Andrew as the only initial operator. Authorization is a fresh server-side membership keyed by authenticated Supabase `user.id`; email, browser state, customer/project roles, subscriptions, metadata claims, and `adminProcedure` are not operator authority. Policy changes are transactional and retain append-only audit history. The decision maps runtime/UI/service/persistence owners, protected paths, regression boundaries, bootstrap/revocation, and concurrency behavior without recreating `apps/admin` or a parallel authority.
 
 ### OD-14: Evidence-based Jagwar commercial model
 
@@ -114,11 +119,15 @@ This decision must also identify protected AI/editor zones and the existing publ
 
 After the end-to-end workflow runs in a representative environment, reconcile actual discovery, qualification, AI/generation, sandbox/VM, hosting/deployment, storage/egress, outreach, retry/failure, concurrency, and support costs. Model target margin and abuse exposure, then obtain Andrew's approval for the commercial policy. Old Jagwar prices and assumptions do not satisfy this decision.
 
-### OD-15: Inaccessible pinned admin submodule
+### OD-15: Retire the inaccessible private admin submodule from Jagwar
 
-**Needed before:** reproducible dependency installation, complete baseline testing, or any claim that all existing Onlook applications are preserved.
+**Status:** resolved by Andrew-approved target-fork decision and CCR-019 through CCR-022 on 2026-07-28.
 
-The pinned `.gitmodules` references `https://github.com/onlook-dev/admin.git` at `3dd1caaab9137203156e59fd48a72d0ef82b942d`, but the repository is unavailable to the authenticated account and does not resolve publicly. Obtain legitimate access to the exact pinned source or an upstream-authorized public resolution. Do not remove `apps/admin`, rewrite the root workspace, or regenerate `bun.lock` merely to make installation pass. Any baseline-file workaround requires the normal per-file Core Change Request.
+**Decision:** Jagwar does not ship or claim parity with the unavailable private upstream `apps/admin` application. The target removes its `.gitmodules` registration, gitlink, root `dev:admin` script, and generated lock records. The accessible Onlook web/editor application remains the Jagwar foundation.
+
+Pinned Bun 1.3.1 now completes a clean frozen install without the private admin workspace, and the existing web typecheck passes. The original pinned gitlink and inaccessible URL remain migration/upstream provenance only; they are not an active target dependency.
+
+Operator controls remain governed by OD-13. A future target-native Jagwar operator surface must define explicit roles and least-privileged authorization, reuse the same Supabase identity, project access, billing, durable-operation, policy, credential, and audit authorities, and receive every required protected-file approval. It must not recreate an assumed private admin implementation or introduce a parallel authority.
 
 ## 3. Non-blocking deferred decisions
 
@@ -149,7 +158,7 @@ The pinned `.gitmodules` references `https://github.com/onlook-dev/admin.git` at
 | Historical data migration guesses | High | Old Site/user/project identifiers may not map cleanly. | Explicit maps, unresolved state, dry runs, no destructive cutover. |
 | Billing drift | Critical | Stale local plan/credits can grant or deny service incorrectly. | Reconcile billing provider truth; idempotent webhook and opening balance process. |
 | Premature pricing | High | Plans chosen before target VM/hosting/provider/concurrency costs are known can destroy margin or misprice value. | Capture non-enforcing cost telemetry early; defer OD-14 and customer gates until representative evidence exists. |
-| Inaccessible pinned admin submodule | High | The public fork cannot reproduce the complete workspace or pass frozen dependency installation while `apps/admin` is unavailable. | Resolve OD-15 through legitimate pinned-source access or an upstream-authorized resolution; preserve the lockfile and workspace until then. |
+| Retired inaccessible upstream admin | Low, accepted fork divergence | Jagwar intentionally does not ship or claim parity with the unavailable private upstream application; upstream merges may reintroduce its gitlink or script. | Keep CCR-019–022 and the frozen-install regression in upgrade reviews. Build any future operator surface under OD-13 using existing authorities. |
 | Third-party image rights | High | Place photos may not be reusable on generated sites. | Discovery-only display; rights-bearing asset workflow for publication. |
 | Overbuilding infrastructure too early | Medium | Hosting/sandbox rewrite delays core loop. | Preserve Onlook providers until business workflow parity; collect telemetry for later epic. |
 

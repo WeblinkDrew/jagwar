@@ -1,5 +1,5 @@
 {
-  "status": "product-handoff-complete-implementation-blocked",
+  "status": "product-handoff-complete-implementation-gated",
   "intent": "create",
   "created": "2026-07-28",
   "current_product_name": "Jagwar",
@@ -8,7 +8,8 @@
   "product_authority": "Jagwar business workflows defined by this handoff pack; Telio is legacy provenance only",
   "target_foundation": "Onlook",
   "target_visual_authority": "Onlook design system and editor shell",
-  "implementation_readiness": "blocked pending target ownership, persistence, async-job, project-seeding, Onlook-native module map, protected-core inventory, and additive AI-context decisions; final billing blocked separately on measured costs and OD-14 approval",
+  "implementation_readiness": "not ready: ownership, persistence, commercial authority, customer module map, additive AI seam, OD-11 durable execution proof, and OD-15 target dependency resolution are complete; project seeding still requires executable proof; first-slice protected-file approvals remain pending; final billing remains blocked on measured costs and OD-14 approval",
+  "course_correction": "approved by Andrew on 2026-07-28; dependency-safe suffix slices and sprint order adopted; OD-15 CCR-019 through CCR-022 approved and implemented",
   "donor_repository": "/Users/andrewsimic/Developer/Telio",
   "reference_repository": "/Users/andrewsimic/Developer/Onlook/onlook",
   "reference_write_policy": "read-only",
@@ -49,20 +50,15 @@
     "iMessage production connector"
   ],
   "phase_blocking_decisions": [
-    "Onlook workspace/account mapping",
-    "target domain/persistence placement",
     "interactive discovery provider",
     "weak-site policy V1",
     "WhatsApp/BSP operating model",
     "activation send definition",
     "commercial policy",
     "data retention/privacy policy",
-    "single target-native billing/usage authority",
-    "durable async execution authority",
-    "Onlook-native personalized project-seeding path",
-    "Onlook-native Jagwar module map and protected-core inventory",
-    "additive AI business-context seam or approved per-file exception",
-    "legitimate access to the pinned apps/admin submodule or an upstream-authorized resolution"
+    "Onlook-native personalized project-seeding executable proof",
+    "exact per-slice protected-core approvals",
+    "OD-13 operator role and target-native surface placement before operator implementation"
   ],
   "assumptions": [
     "Onlook remains the editor/project/AI/publishing foundation",

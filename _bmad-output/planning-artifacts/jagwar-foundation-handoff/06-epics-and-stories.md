@@ -1,6 +1,6 @@
 ---
 title: Jagwar Business Workflows on Onlook — Epic Breakdown
-status: product-backlog-draft-pending-target-architecture
+status: product-backlog-approved-with-course-correction
 created: 2026-07-28
 updated: 2026-07-28
 stepsCompleted:
@@ -12,6 +12,7 @@ inputDocuments:
   - 03-domain-model-and-rules.md
   - 04-ux-and-information-architecture.md
   - 05-integration-contracts.md
+  - ../sprint-change-proposal-2026-07-28-jagwar-dependency-sequencing.md
 ---
 
 # Jagwar Business Workflows on Onlook — Epic Breakdown
@@ -19,6 +20,12 @@ inputDocuments:
 ## Overview
 
 This backlog rebuilds Jagwar's differentiated business workflows inside the Onlook product. Epics are grouped by complete user outcomes and may reuse Onlook's existing platform capabilities. The numbering is traceability, not permission to implement blindly: first complete the architecture gate below, then produce a dependency-safe sprint order against a pinned writable Onlook commit. Old Jagwar paths cited in `07-donor-inventory-and-migration.md` are evidence only.
+
+## Approved dependency-sequencing authority
+
+Andrew approved the BMAD Correct Course proposal on 2026-07-28. The parent epics, 42 story IDs, requirements coverage, and acceptance criteria in this file remain authoritative. Their sprint-sized suffix slices, entry gates, certification boundaries, and dependency order are governed by `../sprint-change-proposal-2026-07-28-jagwar-dependency-sequencing.md` and the adopted implementation sequence.
+
+OD-15 is resolved for the Jagwar target by Andrew-approved CCR-019 through CCR-022: the unavailable private upstream `apps/admin` submodule, root script, and lock records are intentionally retired from this fork. Jagwar does not claim parity with that unavailable application. Runtime operator controls remain gated on OD-13's explicit role/authorization and placement decision; an approved target-native Jagwar operator surface must reuse existing Onlook authorities and cannot become a parallel admin, auth, billing, project, job, or audit system.
 
 ## Pre-story target architecture gate
 
